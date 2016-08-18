@@ -4,6 +4,7 @@
 -module(frags).
 -export([create/0, activate/0, deactivate/0, add_frag/0, del_frag/0]).
 -export([add_person/1, populate/1]).
+-export([add_person_no_frag/1, populate_no_frag/1]).
 -record(person, {name,
                  age = 0,
                  address = unknown,
@@ -16,6 +17,15 @@ add_person(Name) ->
 		mnesia:write(#person{name=Name})
 	end,
 	mnesia:activity(transaction, T, [], mnesia_frag).
+
+add_person_no_frag(Name) ->
+	T = fun() ->
+		mnesia:write(#person{name=Name})
+	end,
+	mnesia:activity(transaction, T).
+
+populate_no_frag(N) ->
+	[add_person_no_frag(X) || X <- lists:seq(1,N)].
 
 %% Populate the db with N test data
 populate(N) ->
