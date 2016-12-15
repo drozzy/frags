@@ -25,7 +25,7 @@ You should see two frags. Try adding some sample data:
     frags:populate(100).    
 
 Now those tables shold have more data. Now add and remove
-some frags and observer the tables:
+some frags and examine the tables:
 
     frags:add_frag().
     frags:add_frag().
